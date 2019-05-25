@@ -3,9 +3,6 @@
  */
 package com.apress.books.model;
 
-import java.util.List;
-import com.apress.books.model.Author;
-
 /**
  * @author Bryan
  *
@@ -14,7 +11,8 @@ public class Book {
 	private Long id;
 	private Long categoryId;
 	private String bookTitle;
-	private List<Author> authors;
+	private String authorFirstName;
+	private String authorLastName;
 	private String publisherName;
 	
 	public Long getId() {
@@ -41,12 +39,20 @@ public class Book {
 		this.bookTitle = bookTitle;
 	}
 	
-	public List<Author> getAuthors(){
-		return authors;
+	public String getAuthorFirstName() {
+		return this.authorFirstName;
 	}
 	
-	public void setAuthors(List<Author> authors) {
-		this.authors = authors;
+	public void setAuthorFirstName(String authorFirstName) {
+		this.authorFirstName = authorFirstName;
+	}
+	
+	public String getAuthorLastName() {
+		return this.authorLastName;
+	}
+	
+	public void setAuthorLastName(String authorLastName) {
+		this.authorLastName = authorLastName;
 	}
 	
 	public String getPublisherName() {
@@ -58,7 +64,7 @@ public class Book {
 	}
 	
 	public String toString() {
-		return "Book - Id: " + id + ", Book Title: " + bookTitle;
+		return "Book - Id: " + id + ", Book Title: " + bookTitle + ", Author: " + authorFirstName + " " + authorLastName;
 	}
 	
 }

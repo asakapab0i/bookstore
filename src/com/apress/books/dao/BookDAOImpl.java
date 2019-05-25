@@ -11,7 +11,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.apress.books.model.Author;
 import com.apress.books.model.Book;
 import com.apress.books.model.Category;
 
@@ -39,7 +38,6 @@ public class BookDAOImpl implements BookDAO {
 	@Override
 	public List<Book> findAllBooks() {
 		List<Book> result = new ArrayList<>();
-		List<Author> authorList = new ArrayList<>();
 		
 		String sql = "SELECT * FROM book INNER JOIN author ON book.id = author.book_id";
 		
@@ -50,15 +48,11 @@ public class BookDAOImpl implements BookDAO {
 			ResultSet resultSet = statement.executeQuery();
 			while (resultSet.next()) {
 				Book book = new Book();
-				Author author = new Author();
 				book.setId(resultSet.getLong("id"));
 				book.setBookTitle(resultSet.getString("book_title"));
 				book.setCategoryId(resultSet.getLong("category_id"));
-				author.setBookId(resultSet.getLong("book_id"));
-				author.setFirstName(resultSet.getString("first_name"));
-				author.setLastName(resultSet.getString("last_name"));
-				authorList.add(author);
-				book.setAuthors(authorList);
+				book.setAuthorFirstName(resultSet.getString("first_name"));
+				book.setAuthorLastName(resultSet.getString("last_name"));
 				book.setPublisherName(resultSet.getString("publisher"));
 				result.add(book);
 			}
@@ -73,7 +67,6 @@ public class BookDAOImpl implements BookDAO {
 	@Override
 	public List<Book> searchBooksByKeyword(String keyWord) {
 		List<Book> result = new ArrayList<>();
-		List<Author> authorList = new ArrayList<>();
 		
 		String sql = "SELECT * FROM book INNER JOIN author ON book.id = author.book_id"
 				+ " WHERE book_title LIKE '%"
@@ -91,14 +84,12 @@ public class BookDAOImpl implements BookDAO {
 			ResultSet resultSet = statement.executeQuery();
 			while (resultSet.next()) {
 				Book book = new Book();
-				Author author = new Author();
 				book.setId(resultSet.getLong("id"));
 				book.setBookTitle(resultSet.getString("book_title"));
 				book.setPublisherName(resultSet.getString("publisher"));
 				book.setId(resultSet.getLong("id"));
-				author.setFirstName(resultSet.getString("first_name"));
-				author.setLastName(resultSet.getString("last_name"));
-				book.setAuthors(authorList);
+				book.setAuthorFirstName(resultSet.getString("first_name"));
+				book.setAuthorLastName(resultSet.getString("last_name"));
 				result.add(book);
 			}
 		} catch (SQLException ex) {
